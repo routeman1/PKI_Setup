@@ -1,0 +1,18 @@
+server {
+        listen 80;
+        return 301 https://$host$request_uri;
+}
+   server {
+        listen 443 ssl;
+
+        ssl_certificate /etc/ssl/server.crt;
+        ssl_certificate_key /etc/ssl/server.key;
+
+        access_log /var/log/nginx/access.log;
+        error_log /var/log/nginx/error.log;
+
+        location / {
+                    root /opt/nginx_data/;
+                    autoindex on;
+                }
+}

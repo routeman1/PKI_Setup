@@ -1,0 +1,36 @@
+﻿DefWinAccount,Administrator
+DefWinLoginPass,Letmein!
+NewAdminAccount,bandit
+NewAdminPass,ThisP@ssw0rd1$Disabled!
+NewGuestAccount,trixie
+NewGuestPass,ThisP@ssw0rd1$Disabled!
+RemoteAdmin,bluey
+RemoteAdminPass,ChangePass!@#
+CoreNet_Subnet,10.1.2.0
+CoreNet_prefix,24
+DC1_Host_Name,dc1
+DC1_Host_IPAddress,10.1.2.111
+DC2_Host_Name,dc2
+DC2_Host_IPAddress,10.1.2.112
+RCA_Host_Name,rca
+RCA_Host_IPAddress,10.1.2.115
+ICA_Host_Name,ica
+ICA_Host_IPAddress,10.1.2.116
+Timezone,Mountain Standard Time
+VLM_Hostname,vlmcsd
+VLM_IPAddress,192.168.51.15
+WIN2022_LIC,WX4NM-KYWYW-QJJR4-XV3QB-6VM33
+Domain,demo.intra
+AD_Domain,demo.intra
+ADDomainMode,Win2012R2
+ADForestMode,Win2012R2
+SafeModeAdministratorPassword,ThisIsSomePa55w0rd!$
+Netbios_Name,demo
+AD_OU_Level1,demo
+Cert_InternalOID,1.2.3.4.1455.67.89.5
+Cert_AllIssuanceOID,2.5.29.32.0
+Cert_Notice,This is a internal resource only! Certificates issued by this Certificate Authority are for internal usage only. 
+PKI_URL,pki.demo.intra
+OCSP_URL,ocsp.demo.intra
+RootCAName,Demo Root Cert Authority
+ICA_CAName,Demo Intermediate CA
