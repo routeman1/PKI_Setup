@@ -10,7 +10,7 @@ Currently this has only been tested and verified to work with Windows Server 202
 ### Building the Docker Container:
 - Clone the repository onto your Docker server
 ```
-git pull https://github.com/routeman1/pki-setup
+git clone https://github.com/routeman1/PKI_Setup.git
 ```
 - Update the variables csv file with the appropriate configuration information. Modify the varibles.csv file with your own values and refer to the variables.md to help guide you. 
     - [Variables HTML](variables.html)
