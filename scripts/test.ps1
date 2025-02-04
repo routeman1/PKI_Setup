@@ -27,15 +27,6 @@ $ComputerIP = $HostList
             exit
         }
 
-        # Write-Host "- Testing if user has required elevated permissions"
-        # Returns $true if elevated, otherwise quit.
-        # $permVal = ([bool] (net session 2>$null))
-        # if ($permVal = $true )
-        #     { Write-Host "  Passed - User has the required permissions" -ForegroundColor Green }
-        # else {
-        #     Write-Host "  Failed - The user " whoami " does not have the required elevated permissions on $ComputerIP." -ForegroundColor Red
-        #     exit
-        # }
     }
     Write-Host "All pre-installation tests have passed." -ForegroundColor Green
 }

@@ -18,7 +18,7 @@ ICA_Host_Name,ica
 ICA_Host_IPAddress,10.1.2.116
 Timezone,Mountain Standard Time
 VLM_Hostname,vlmcsd
-VLM_IPAddress,192.168.51.15
+VLM_IPAddress,10.1.2.35
 WIN2022_LIC,WX4NM-KYWYW-QJJR4-XV3QB-6VM33
 Domain,demo.intra
 AD_Domain,demo.intra

@@ -2,7 +2,7 @@
 
 These scripts will set up a Primary and Secondary Domain Controller including a offline Root Certificate Authority (RCA) and a (Enterprise) Intermediate Certificate Authority (ICA). The Root will NOT be joined to the domain and the intermediate CA will be part of the domain. This is a full and working PKI implementation issuing certificates to the DC’s, workstations, users and other support services (ie: OCSP) as required. In addition, a certificate templates are created for Web services to be utilized when generating Web certs. 
 
-Currently this has only been tested and verified to work with Windows Server 2022.  
+Currently this has only been tested and verified to work with Windows Server 2022. Starting testing with Windows 2025 soon. 
  
 
 ## Running the Scripts

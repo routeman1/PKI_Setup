@@ -31,11 +31,6 @@ Function ServerPrep {
         # Inside the scriptblock that’s running on the remote machine, we create a new scriptblock from that string and then run it. 
         Invoke-Command -HostName $hostip -UserName $DefWinAccount -KeyFilePath "$sshKeyFile" -ScriptBlock {
 
-            # Disable UAC
-            #Write-Host "[$using:New_Host_Name] Disabling UAC to support installation and configuration"
-            #Set-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System" -Name "ConsentPromptBehaviorAdmin" -Value "5";
-            #Set-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System" -Name "EnableLUA" -Value "0";
-
                 # Set Timezone, Product Key, and activate windows
                 Write-Host "[$using:New_Host_Name] Setting Timezone"
                 Set-TimeZone -Name $using:Timezone

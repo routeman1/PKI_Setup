@@ -14,7 +14,6 @@ Function RootCASetup {
     )
     
     # Get the Distinguished Name of the Active Directory Domain  and store in variable
-    #$ADDN = (Invoke-Command -ComputerName $DC1[1] -Credential $Credential -ScriptBlock {
     $ADDN = (Invoke-Command -HostName $DC1[1] -UserName $UserName -KeyFilePath "$sshKeyFile" -ScriptBlock {
          Get-ADDomain | Select-Object -ExpandProperty DistinguishedName
     })

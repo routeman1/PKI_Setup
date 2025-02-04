@@ -31,9 +31,6 @@ Function IntermediateCAConfigII {
     $ComputerName = (hostname)
     $ADName = $AD_OU_Level1
 
-    # [String]$Rem_Adm_Pw = $RemoteAdminPass
-    # [SecureString]$Securestring_Rem_Adm_Pw = $Rem_Adm_Pw | ConvertTo-SecureString -AsPlainText -Force
-
     # Continuing Intermediate CA Setup
 
         Write-Host "[$ComputerName]-Customizing AD Certificate Services" 
@@ -123,9 +120,6 @@ $Domain CPS
         Copy-Item "C:\Windows\system32\CertSrv\CertEnroll\SubordinateCA.crt" -Destination "C:\CertData\$ICA_CAName.crt" | Out-Null
         Copy-Item "C:\Windows\system32\CertSrv\CertEnroll\SubordinateCA.crt" -Destination "C:\Certificates\$ICA_CAName.crt" | Out-Null
         Copy-Item "C:\Windows\system32\CertSrv\CertEnroll\*.crl" -Destination "C:\CertData" | Out-Null
-        #Copy-Item "X:\Intermediate CA Files\SubordinateCA.crt" -Destination C:\Certificates | Out-Null
-        # copy Root CA certificate
-        #Copy-Item "X:\Root CA Files\$RootCAName.crt" -Destination C:\Certificates | Out-Null
 
         Write-Host ""
 
@@ -146,7 +140,7 @@ Function PublishCertificates {
     Password = $Securestring_Rem_Adm_Pw
     })
     
-    ###$DC1_Host_Name = $DC1[0]
+
 
     #### Connect to PDC and set up certificate directory #######
     Invoke-Command -ComputerName $DC1_Host_Name -Credential $Credential -ScriptBlock {
@@ -178,25 +172,25 @@ Function TemplateConfiguration {
 
     $ADName = $AD_OU_Level1
     $PDC = $DC1_Host_Name
-    $ConfigNC = $((Get-ADRootDSE).defaultNamingContext)  # -Server $PDC ###(Get-ADDomain).DistinguishedName
+    $ConfigNC = $((Get-ADRootDSE).defaultNamingContext)  
     
         # create "ica-servers" group in AD with $ICA_Host_Name as the only member
         New-ADGroup -Name "ica-servers" -SamAccountName ica-servers -GroupCategory Security -GroupScope Global `
         -DisplayName "Intermediate Certificate Servers" -Path "CN=Computers,$ConfigNC" `
         -Description "DO NOT Delete or Modify - This is required for the PKI Certificate Templates to function correctly" 
-        Add-ADGroupMember -Identity ica-servers -Members (Get-ADComputer $ICA_Host_Name) #-Server $PDC
+        Add-ADGroupMember -Identity ica-servers -Members (Get-ADComputer $ICA_Host_Name) 
 
         Write-Host "[$ComputerName] Preparing to Import Certificate Templates"
         New-ADCSDrive | Out-Null
 
         # Customize Certificate Templates 
         Write-Host "[$ComputerName] Importing Certificate Templates"
-        New-ADCSTemplate -DisplayName "$ADName Key Archive" -JSON (Get-Content C:\cert-templates\KeyArchiveTemplate.json -Raw) #-Server $PDC
-        New-ADCSTemplate -DisplayName "$ADName Key Recovery Agent" -JSON (Get-Content C:\cert-templates\KeyRecoveryAgentTemplate.json -Raw) #-Server $PDC
-        New-ADCSTemplate -DisplayName "$ADName OCSP Response Signing" -JSON (Get-Content C:\cert-templates\OCSPResponseSigningTemplate.json -Raw) #-Server $PDC 
-        New-ADCSTemplate -DisplayName "$ADName User Certificate" -JSON (Get-Content C:\cert-templates\UserCertificateTemplate.json -Raw) #-Server $PDC
-        New-ADCSTemplate -DisplayName "$ADName Workstation Certificate" -JSON (Get-Content C:\cert-templates\WorkstationCertificateTemplate.json -Raw) #-Server $PDC
-        New-ADCSTemplate -DisplayName "$ADName Web Server Certificate" -JSON (Get-Content C:\cert-templates\WebServerCertificateTemplate.json -Raw) #-Server $PDC
+        New-ADCSTemplate -DisplayName "$ADName Key Archive" -JSON (Get-Content C:\cert-templates\KeyArchiveTemplate.json -Raw) 
+        New-ADCSTemplate -DisplayName "$ADName Key Recovery Agent" -JSON (Get-Content C:\cert-templates\KeyRecoveryAgentTemplate.json -Raw) 
+        New-ADCSTemplate -DisplayName "$ADName OCSP Response Signing" -JSON (Get-Content C:\cert-templates\OCSPResponseSigningTemplate.json -Raw) 
+        New-ADCSTemplate -DisplayName "$ADName User Certificate" -JSON (Get-Content C:\cert-templates\UserCertificateTemplate.json -Raw) 
+        New-ADCSTemplate -DisplayName "$ADName Workstation Certificate" -JSON (Get-Content C:\cert-templates\WorkstationCertificateTemplate.json -Raw) 
+        New-ADCSTemplate -DisplayName "$ADName Web Server Certificate" -JSON (Get-Content C:\cert-templates\WebServerCertificateTemplate.json -Raw) 
 
         # Setting Security on each template
         Set-ADCSTemplateACL -DisplayName "$ADName Key Recovery Agent" -Type Allow -Identity "Authenticated Users" -Enroll

@@ -32,36 +32,6 @@ Function ShowBanner {
 
 }
 
-# -------------------------
-
-# Function PKIStat {
-#         Write-Host "Certificate Authority Status" -ForegroundColor Yellow
-#         Get-CA
-#         Write-Host "Online Responder Status" -ForegroundColor Yellow
-#         Connect-OnlineResponder
-#         Write-Host "Enterprise PKI Status" -ForegroundColor Yellow
-#         Get-CA | Get-EnterprisePKIHealthStatus -ErrorAction SilentlyContinue
-        
-#     }
-Function PKITest {
-    
-    $pkihealth = Get-CA | Get-EnterprisePKIHealthStatus -ErrorAction SilentlyContinue
-    $ocsp = Connect-OnlineResponder $ICA_Host_Name
-    $ocsp = $ocsp | Get-OnlineResponderRevocationConfiguration
-    $pkistat = $pkihealth.Status
-    $ocspstat = $ocsp.Status
-
-        if ($pkistat -eq "Ok" -and $null -eq $ocspstat ) 
-        {
-            Write-Host "PKI is fuctioning correctly" -ForegroundColor Green
-        }
-        else 
-        {
-            Write-Host "PKI is not fuctioning correctly" -ForegroundColor Red
-        }
-    }
-
-
 Function SetupGPO {
     param(
         [array]$HostList,
@@ -140,8 +110,8 @@ Function Cleanup {
     Invoke-Command -HostName $ComputerIP -UserName $RemoteAdmin -KeyFilePath "$sshKeyFile" -ScriptBlock {
         Write-Host "[$using:ComputerName] Cleaning up from the installation"
         # Remove the Scripts folder (ICA)
-        Remove-Item C:\scripts -Recurse #| Out-Null
-        Remove-Item c:\*.req #| Out-Null
+        Remove-Item C:\scripts -Recurse | Out-Null
+        Remove-Item c:\*.req | Out-Null
     }
 
 }
@@ -206,9 +176,6 @@ ShowBanner
 Write-Warning  "Did the ICA_setup_PartII script complete successfully? Selecting Yes will start the script. " -WarningAction Inquire
 
 $cred = (New-Object System.Management.Automation.PsCredential($RemoteAdmin,$secureRemoteAdminPass))
-
-# Write-Host "Testing PKI & Certificate Server Status" -ForegroundColor Yellow
-# PKITest
 
 Write-Host "Configuring PKI GPO for the Domain" -ForegroundColor Yellow
 SetupGPO -Username $RemoteAdmin -HostList $DC1
