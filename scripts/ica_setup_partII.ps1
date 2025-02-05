@@ -32,7 +32,10 @@ Function IntermediateCAConfigII {
     $ADName = $AD_OU_Level1
 
     # Continuing Intermediate CA Setup
-
+        # publishing Root CA and CRL to AD
+        certutil.exe -dsPublish -f "\Windows\System32\certsrv\CertEnroll\$RootCAName.crt" RootCA | Out-Null
+        certutil.exe -dsPublish -f "\Windows\System32\certsrv\CertEnroll\$RootCAName.crl" RootCA | Out-Null
+        #
         Write-Host "[$ComputerName]-Customizing AD Certificate Services" 
         Write-Host "[$ComputerName]-Setting up CRL distribution points" 
 
