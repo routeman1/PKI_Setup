@@ -162,25 +162,6 @@ LoadDefaultTemplates=1
         Write-Host "[$ComputerName] Root CA Commands Completed" 
         Write-Host " "
     }
- 
-    # Publishing cert on DC1 to avoid permssion issues (publishing RootCA to AD on ICA server does not work) 
-    # Invoke-Command -HostName $DC1[1] -UserName $UserName -KeyFilePath "$sshKeyFile" -ScriptBlock {
-    #     # Get Root CA cert from RCA server
-    #     Write-Host "[$using:DC1_Host_Name] Preparing to publish Root CA certificate to AD"
-    #     Write-Host "[$using:DC1_Host_Name] Copy Root CA certificate from RCA server"
-    #     New-Item -Path "C:\temp" -ItemType "directory" | Out-Null
-    #     New-PSDrive -Name "X" -Root "\\$using:RCA_Host_Name\Share" -PSProvider "FileSystem" -Credential $using:joinCred | Out-Null
-
-    #     Copy-Item "X:\Root CA Files\$using:RootCAName.crt" -Destination C:\temp | Out-Null
-    #     Copy-Item "X:\Root CA Files\$using:RootCAName.crl" -Destination C:\temp | Out-Null
-    #     Copy-Item "X:\Intermediate CA Files\SubordinateCA.crt" -Destination C:\temp | Out-Null
-
-    #     Write-Host "[$using:DC1_Host_Name] Publishing Root CA certificate to AD"
-        # Publish Root CA certificate to AD
-        # certutil.exe -dsPublish -f c:\temp\$using:RootCAName.crt RootCA  | Out-Null  
-        # Write-Host "[$using:DC1_Host_Name] Root CA is now published to AD"
-    #     Write-Host " "
-    # }
 }
 Function IntermediateCAConfig {
     param(
